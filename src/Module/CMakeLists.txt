@@ -30,7 +30,7 @@ target_include_directories(${LIBNAME} PUBLIC
 						   )
 ############# etc.... add any other include directories here 
 
-#target_link_libraries(${APPNAME} PRIVATE [library name])
+#target_link_libraries(${LIBNAME} PRIVATE [library name])
 ############# etc.... add any other libraries here
 
 # Set the compile warnings options if enabled

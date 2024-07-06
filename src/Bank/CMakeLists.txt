@@ -30,7 +30,7 @@ target_include_directories(${LIBNAME} PUBLIC
 						   )
 ############# etc....
 
-#target_link_libraries(${APPNAME} PRIVATE Bank BankAccount nlohmann_json)
+#target_link_libraries(${LIBNAME} PRIVATE Bank BankAccount nlohmann_json)
 ############# etc....
 
 # Set the compile warnings options if enabled

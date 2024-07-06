@@ -1,0 +1,78 @@
+add_compile_flags:
+  - --target=x86_64-w64-mingw32
+  - -fparse-all-comments
+  - -Wno-unknown-warning-option
+  - -DUSE_THREADS_POSIX 
+remove_compile_flags:  
+  - -Wunused-command-line-argument
+# Change to directory where compile_commands.json is
+compilation_database_dir: .
+# Change to directory where diagram should be written
+output_directory: ./docs/diagrams
+diagrams:
+  system_class_diagram:
+    type: class
+    title: This Diagram shows the relationship between all system components
+    glob:
+      - src/Bank/*.cpp
+      - src/BankAccount/*.cpp
+      - app/*.cpp
+    include:
+      paths:
+        - src/
+        - inc/
+    exclude:
+      paths:
+        - lib/
+        - build/
+        - testing/
+      namespaces:
+        - std
+        - testing  # Exclude Google Test namespace
+        - nlohmann  # Exclude nlohmann namespace
+    generate_packages: true
+    package_type: directory
+    generate_links:
+      link: "{% if existsIn(element, \"doxygen_link\") %}{{ element.doxygen_link }}{% endif %}"
+      tooltip: "{% if existsIn(element, \"comment\") and existsIn(element.comment, \"brief\") %}{{ abbrv(trim(replace(element.comment.brief.0, \"\\n+\", \" \")), 256) }}{% else %}{{ element.name }}{% endif %}"
+  include_diagram:
+    type: include
+    glob:
+      - src/Bank/*.cpp
+      - src/BankAccount/*.cpp
+      - app/*.cpp
+    include:
+      paths:
+        - src
+        - inc
+        - lib/
+        - testing
+    exclude:
+      namespaces:
+        - std
+        - testing  # Exclude Google Test namespace
+        - nlohmann  # Exclude nlohmann namespace
+      paths:
+        - lib/
+  sequence_diagram:
+    type: sequence
+    glob:
+      - src/Bank/*.cpp
+      - src/BankAccount/*.cpp
+      - app/*.cpp
+    include:
+      paths:
+        - src/
+        - inc/
+        - lib/
+        - testing/
+    exclude:
+      namespaces:
+        - std
+        - testing  # Exclude Google Test namespace
+        - nlohmann  # Exclude nlohmann namespace
+      paths:
+        - lib/
+    start_from:
+      #- function: "main()"
+      - function: "Bank::displayAllAccounts() const"

@@ -1,0 +1,12 @@
+[submodule "lib/json"]
+	path = lib/json
+	url = https://github.com/nlohmann/json
+[submodule "testing/lib/googletest"]
+	path = testing/lib/googletest
+	url = https://github.com/google/googletest
+[submodule "docs/doxygen/doxygen-awesome"]
+	path = docs/doxygen/doxygen-awesome
+	url = https://github.com/jothepro/doxygen-awesome-css
+[submodule "docs/diagrams/lib"]
+	path = docs/diagrams/lib
+	url = https://github.com/bkryza/clang-uml

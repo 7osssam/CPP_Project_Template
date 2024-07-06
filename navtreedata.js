@@ -25,7 +25,7 @@
 var NAVTREE =
 [
   [ "BankApp", "index.html", [
-    [ "Real-time Vamp plugin SDK for C++20", "index.html", null ],
+    [ "C++ Project Template with CMake", "index.html", null ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
       [ "Class Index", "classes.html", null ],

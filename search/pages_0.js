@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['real_2dtime_20vamp_20plugin_20sdk_20for_20c_2b_2b20_0',['Real-time Vamp plugin SDK for C++20',['../index.html',1,'']]]
+  ['c_2b_2b_20project_20template_20with_20cmake_19',['C++ Project Template with CMake',['../index.html',1,'']]]
 ];

@@ -1,5 +1,5 @@
 var annotated_dup =
 [
-    [ "Bank", "classBank.html", null ],
+    [ "Bank", "classBank.html", "classBank" ],
     [ "BankAccount", "classBankAccount.html", "classBankAccount" ]
 ];

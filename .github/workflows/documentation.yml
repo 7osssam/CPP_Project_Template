@@ -1,5 +1,4 @@
 name: Documentation
-
 on:
   push:
     tags:
@@ -27,6 +26,9 @@ jobs:
     - name: building
       run: |
         make build
+    - name: Documentation generation
+      run: |
+        make html
     - name: Deploy to GitHub Pages
       uses: Cecilapp/GitHub-Pages-deploy@v3
       env:

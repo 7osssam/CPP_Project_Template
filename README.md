@@ -76,7 +76,7 @@ This project template provides a robust foundation for C++ projects using CMake 
    make clean-cache-reconfigure
    ```
 
-   Cleans the cache and reconfigures the build environment using CMake, setting up for a Debug build with Ninja.
+   Cleans the cache and reconfigures the build environment using CMake, setting up for a Debug build with Ninja Generator (recommended).
 
 4. **Build the Project:**
    ```
@@ -122,10 +122,6 @@ This project template provides a robust foundation for C++ projects using CMake 
 - [ ] Add support for Code Coverage.
 - [ ] Add support for Static Code Analysis (linting).
 
-<!-- callout -->
-> [!NOTE]  
-> The Banking System project files in this template are for demonstration purposes only. You can replace them with your own project files and modules.
-
 
 ## Contributing
 
@@ -136,6 +132,10 @@ Contributions are welcome! Please follow these steps to contribute:
 3. Commit your changes (`git commit -am [Feature message]`).
 4. Push to the branch (`git push origin feature/feature-name`).
 5. Create a new Pull Request.
+
+<!-- callout -->
+> [!NOTE]  
+> The Banking System project files in this template are for demonstration purposes only. You can replace them with your own project files and modules.
 
 
 ## License

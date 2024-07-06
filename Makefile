@@ -15,7 +15,7 @@ dependency:
 ifeq ($(OS), Windows_NT)
 	@choco install gcc g++ cmake llvm ninja doxygen graphviz clang-format  lcov
 else
-	@sudo apt-get install -y gcc g++ cmake llvm ninja-build doxygen graphviz clang-format
+	@sudo apt-get install -y gcc g++ cmake llvm ninja-build doxygen graphviz clang-format texlive
 endif
 
 # Dependency graph generation

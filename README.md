@@ -122,10 +122,17 @@ Contributions are welcome! Please follow these steps to contribute:
 
 1. Fork the repository.
 2. Create a new branch (`git checkout -b feature/feature-name`).
-3. Commit your changes (`git commit -am 'Add new feature'`).
+3. Commit your changes (`git commit -am [Feature message]`).
 4. Push to the branch (`git push origin feature/feature-name`).
 5. Create a new Pull Request.
 
+## TODO
+- [ ] Add support for Windows CI/CD.
+- [ ] Add support for macOS CI/CD.
+- [ ] Add support for Code Coverage.
+- [ ] Add support for Static Code Analysis (linting).
+
 ## License
+Feel free to use this project template for your own projects.
 
 This project is licensed under the [MIT License](LICENSE).

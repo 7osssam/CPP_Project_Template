@@ -1,0 +1,36 @@
+name: Documentation
+
+on:
+  push:
+    tags:
+      - "*"
+    branches: [ main, master ]
+
+jobs:
+  build:
+    name: Build and publish documentation
+    runs-on: ubuntu-latest
+    permissions: 
+      contents: write
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-python@v2
+    - name: Install dependencies
+      run: |
+        make dependency
+    - name: prepare
+      run: |
+        make clean
+    - name: clean configure
+      run: |
+        make clean-cache-reconfigure
+    - name: building
+      run: |
+        make build
+    - name: Deploy to GitHub Pages
+      uses: Cecilapp/GitHub-Pages-deploy@v3
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        email: 7osssam@protonmail.ch
+        build_dir: ./docs/doxygen/html

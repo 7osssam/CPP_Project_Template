@@ -1,0 +1,28 @@
+name: Ubuntu CI Test
+
+on:
+  push:
+    branches: [ main, master, dev ]
+  pull_request:
+    branches: [ main, master, dev ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: install
+      run: |
+        make dependency
+    - name: prepare
+      run: |
+        make clean
+    - name: configure
+      run: |
+        make clean-cache-reconfigure
+    - name: building
+      run: |
+        make build
+    - name: testing
+      run: |
+        make test

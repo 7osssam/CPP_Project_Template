@@ -1,0 +1,17 @@
+sequenceDiagram
+    participant C_0013925658533498293399 as Bank
+    * ->> C_0013925658533498293399 : displayAllAccounts() const
+    activate C_0013925658533498293399
+    alt
+    loop
+    participant C_0009984192897324832466 as BankAccount
+    C_0013925658533498293399 ->> C_0009984192897324832466 : displayAccountInfo() const
+    activate C_0009984192897324832466
+    deactivate C_0009984192897324832466
+end
+    else
+    end
+    deactivate C_0013925658533498293399
+
+%% Generated with clang-uml, version 0.5.3
+%% LLVM version clang version 18.1.1 (https://github.com/llvm/llvm-project.git dba2a75e9c7ef81fe84774ba5eee5e67e01d801a)

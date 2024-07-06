@@ -1,0 +1,199 @@
+\label{index_md_D__XDUMP_CPP_Project_Template_README}%
+\Hypertarget{index_md_D__XDUMP_CPP_Project_Template_README}%
+ \href{https://opensource.org/licenses/MIT}{\texttt{ }} \href{https://github.com/lukasberbuer/rt-vamp-plugin-sdk/actions/workflows/ci.yml}{\texttt{ }} \href{https://github.com/lukasberbuer/rt-vamp-plugin-sdk/actions/workflows/doc.yml}{\texttt{ }} \href{https://github.com/7osssam/testing/actions/workflows/documentation.yml}{\texttt{ }} \href{https://github.com/lukasberbuer/rt-vamp-plugin-sdk/actions/workflows/python.yml}{\texttt{ }} \href{https://coveralls.io/github/lukasberbuer/rt-vamp-plugin-sdk}{\texttt{ }} \href{https://pypi.org/project/rtvamp}{\texttt{ }} \href{https://pypi.org/project/rtvamp}{\texttt{ }}
+
+Vamp is an C/\+C++ plugin API for audio analysis / feature extraction plugins\+: \href{https://www.vamp-plugins.org}{\texttt{ https\+://www.\+vamp-\/plugins.\+org}}
+
+This SDK for plugins and hosts targets performance-\/critical applications by\+:
+
+
+\begin{DoxyItemize}
+\item reducing memory allocations, {\bfseries{no memory allocation}} during processing
+\item simplifying and restricting the plugin API
+\item {\ttfamily constexpr} evaluation for compile time errors instead of runtime errors
+\end{DoxyItemize}
+
+The SDK aims to be {\bfseries{well tested}}, {\bfseries{cross-\/platform}} and use {\bfseries{modern C++}}. The plugin SDK is available as a \href{https://github.com/lukasberbuer/rt-vamp-plugin-sdk/releases/latest/download/pluginsdk.hpp}{\texttt{ single-\/header library}} (download as asset from \href{https://github.com/lukasberbuer/rt-vamp-plugin-sdk/releases/latest}{\texttt{ latest release}} page).
+
+Compiler support\+: {\ttfamily GCC \texorpdfstring{$>$}{>}= 10}, {\ttfamily Clang \texorpdfstring{$>$}{>}= 11}, {\ttfamily MSVC \texorpdfstring{$>$}{>}= 19.\+30}
+
+\begin{quote}
+{\bfseries{Note}}\+: Python bindings for the hostsdk are available via \href{https://pypi.org/project/rtvamp}{\texttt{ Py\+PI}}. Please check out the \href{https://lukasberbuer.github.io/rt-vamp-plugin-sdk/python}{\texttt{ documentation}}. \end{quote}
+\doxysection*{Links}
+
+
+\begin{DoxyItemize}
+\item \href{https://lukasberbuer.github.io/rt-vamp-plugin-sdk}{\texttt{ API documentation}}
+\item \href{https://github.com/lukasberbuer/rt-vamp-plugin-sdk/tree/master/examples}{\texttt{ Examples}}
+\item Vamp ecosystem\+:
+\begin{DoxyItemize}
+\item \href{https://www.vamp-plugins.org/download.html}{\texttt{ Great collection of plugins}}
+\item \href{https://www.sonicvisualiser.org/}{\texttt{ Sonic Visualiser}}\+: Open-\/source software to visualize, analyze and annotate audio
+\item \href{https://vamp-plugins.org/sonic-annotator/}{\texttt{ Sonic Annotator}}\+: Batch tool for feature extraction
+\item \href{https://wiki.audacityteam.org/wiki/Vamp_Plug-ins}{\texttt{ Audacity supports Vamp plugins}}
+\end{DoxyItemize}
+\end{DoxyItemize}
+
+\doxysection*{Performance}
+
+Following benchmarks compare the performance/overhead of the plugin SDKs based on a simple \href{https://github.com/lukasberbuer/rt-vamp-plugin-sdk/tree/master/benchmarks/sdks/RMS.hpp}{\texttt{ RMS plugin}}. The performance is measured as throughput (number of processed samples per second).
+
+{\bfseries{Results with an i7-\/9850H CPU (12 cores)\+:}}
+
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{2}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Throughput vs. block size   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Multithreading    }\\\cline{1-2}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Throughput vs. block size   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Multithreading    }\\\cline{1-2}
+\endhead
+   &   \\\cline{1-2}
+\end{longtabu}
+
+
+{\bfseries{Results with an ARMv7 CPU}}\+: \href{https://github.com/lukasberbuer/rt-vamp-plugin-sdk/tree/master/benchmarks/sdks/results/benchmark_sdks_armv7.png}{\texttt{ Throughput vs block size}}, \href{https://github.com/lukasberbuer/rt-vamp-plugin-sdk/tree/master/benchmarks/sdks/results/benchmark_sdks_armv7_multithreading.png}{\texttt{ Multithreading}}
+
+\doxysection*{Why another SDK?}
+
+The \href{https://github.com/c4dm/vamp-plugin-sdk}{\texttt{ official SDK}} offers a convenient \href{https://code.soundsoftware.ac.uk/projects/vamp-plugin-sdk/embedded/classVamp_1_1Plugin.html}{\texttt{ C++ plugin interface}}. But there are some drawbacks for real-\/time processing\+:
+
+
+\begin{DoxyItemize}
+\item Huge amount of memory allocations due to the use of C++ containers like vectors and lists {\bfseries{passed by value}}.
+
+Let\textquotesingle{}s have a look at the {\ttfamily process} method of the {\ttfamily Vamp\+::\+Plugin} class which does the main work\+:
+
+{\ttfamily Feature\+Set process(const float $\ast$const $\ast$input\+Buffers, Real\+Time timestamp)}
+
+{\ttfamily Feature\+Set} is returned by value and is a {\ttfamily std\+::map\texorpdfstring{$<$}{<}int, Feature\+List\texorpdfstring{$>$}{>}}. {\ttfamily Feature\+List} is a {\ttfamily std\+::vector\texorpdfstring{$<$}{<}Feature\texorpdfstring{$>$}{>}} and {\ttfamily Feature} is {\ttfamily struct} containing the actual feature values as a {\ttfamily std\+::vector\texorpdfstring{$<$}{<}float\texorpdfstring{$>$}{>}}. So in total, those are three nested containers, which are all heap allocated.
+\item The C++ API is a wrapper of the C API\+:
+
+On the plugin side, the {\ttfamily Plugin\+Adapter} class converts the C++ containers to C level (\href{https://github.com/c4dm/vamp-plugin-sdk/blob/master/src/vamp-sdk/PluginAdapter.cpp\#L828-L921}{\texttt{ code}}). Therefore the C++ containers are temporary objects and will be deallocated shortly after creation.
+
+On the host side, the {\ttfamily Plugin\+Host\+Adapter} converts again from the C to the C++ representation (\href{https://github.com/c4dm/vamp-plugin-sdk/blob/master/src/vamp-hostsdk/PluginHostAdapter.cpp\#L413-L464}{\texttt{ code}}).
+\end{DoxyItemize}
+
+\doxysubsection*{Solution approach}
+
+The {\ttfamily rt-\/vamp-\/plugin-\/sdk} aims to to keep the overhead minimal but still provide an easy and safe to use API\+:
+
+
+\begin{DoxyEnumerate}
+\item Static plugin informations are provided as {\ttfamily static constexpr} variables to generate the C plugin descriptor at compile time.
+\item The computed features are returned by reference (as a {\ttfamily std\+::span}) to prevent heap allocations during processing.
+\item The input buffer is provided either as a {\ttfamily Time\+Domain\+Buffer} ({\ttfamily std\+::span\texorpdfstring{$<$}{<}const float\texorpdfstring{$>$}{>}}) or a {\ttfamily Frequency\+Domain\+Buffer} ({\ttfamily std\+::span\texorpdfstring{$<$}{<}const std\+::complex\texorpdfstring{$<$}{<}float\texorpdfstring{$>$}{>}\texorpdfstring{$>$}{>}}). The process method takes a {\ttfamily std\+::variant\texorpdfstring{$<$}{<}Time\+Domain\+Buffer, Frequency\+Domain\+Buffer\texorpdfstring{$>$}{>}}. A wrong input buffer type will result in an exception. The sized spans enable easy iteration over the input buffer data.
+\end{DoxyEnumerate}
+
+\doxysubsection*{Plugin restrictions}
+
+Following features of the Vamp API {\ttfamily Vamp\+::\+Plugin} are restricted within the {\ttfamily rt-\/vamp-\/plugin-\/sdk}\+:
+
+
+\begin{DoxyItemize}
+\item {\ttfamily Output\+Descriptor\+::has\+Fixed\+Bin\+Count == true} for every output. The number of values is constant for each feature during processing. This has the advantage, that memory for the feature vector can be preallocated.
+\item {\ttfamily Output\+Descriptor\+::\+Sample\+Type == One\+Sample\+Per\+Step} for every output. The plugin will generate one feature set for each input block.
+
+Following parameters are therefore negitable\+:
+\begin{DoxyItemize}
+\item {\ttfamily Output\+Descriptor\+::sample\+Rate}
+\item {\ttfamily Output\+Descriptor\+::has\+Duration}
+\item {\ttfamily Feature\+::has\+Timestamp} \& {\ttfamily Feature\+::timestamp}
+\item {\ttfamily Feature\+::has\+Duration} \& {\ttfamily Feature\+::duration}
+\end{DoxyItemize}
+\item Only one input channel allowed\+: {\ttfamily get\+Min\+Channel\+Count() == 1}
+\end{DoxyItemize}
+
+\doxysection*{Minimal example}
+
+More examples can be found here\+: \href{https://github.com/lukasberbuer/rt-vamp-plugin-sdk/tree/master/examples}{\texttt{ https\+://github.\+com/lukasberbuer/rt-\/vamp-\/plugin-\/sdk/tree/master/examples}}.
+
+\doxysubsection*{Plugin}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }ZeroCrossing\ :\ \textcolor{keyword}{public}\ rtvamp::pluginsdk::Plugin<1\ \textcolor{comment}{/*\ one\ output\ */}>\ \{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{using\ }Plugin::Plugin;\ \ \textcolor{comment}{//\ inherit\ constructor}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ Meta\ meta\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .identifier\ \ \ \ =\ \textcolor{stringliteral}{"{}zerocrossing"{}},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .name\ \ \ \ \ \ \ \ \ \ =\ \textcolor{stringliteral}{"{}Zero\ crossings"{}},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .description\ \ \ =\ \textcolor{stringliteral}{"{}Detect\ and\ count\ zero\ crossings"{}},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .maker\ \ \ \ \ \ \ \ \ =\ \textcolor{stringliteral}{"{}LB"{}},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .copyright\ \ \ \ \ =\ \textcolor{stringliteral}{"{}MIT"{}},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .pluginVersion\ =\ 1,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .inputDomain\ \ \ =\ InputDomain::Time,}
+\DoxyCodeLine{\ \ \ \ \};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ OutputList\ getOutputDescriptors()\textcolor{keyword}{\ const\ override\ }\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ OutputDescriptor\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .identifier\ \ =\ \textcolor{stringliteral}{"{}counts"{}},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .name\ \ \ \ \ \ \ \ =\ \textcolor{stringliteral}{"{}Zero\ crossing\ counts"{}},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .description\ =\ \textcolor{stringliteral}{"{}The\ number\ of\ zero\ crossing\ points\ per\ processing\ block"{}},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .unit\ \ \ \ \ \ \ \ =\ \textcolor{stringliteral}{"{}"{}},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .binCount\ \ \ \ =\ 1,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ initialise(uint32\_t\ stepSize,\ uint32\_t\ blockSize)\textcolor{keyword}{\ override\ }\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ initialiseFeatureSet();\ \ \textcolor{comment}{//\ automatically\ resizes\ feature\ set\ to\ number\ of\ outputs\ and\ bins}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ reset()\textcolor{keyword}{\ override\ }\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ previousSample\_\ =\ 0.0f;}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{const}\ FeatureSet\&\ process(InputBuffer\ buffer,\ uint64\_t\ nsec)\textcolor{keyword}{\ override\ }\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ signal\ =\ std::get<TimeDomainBuffer>(buffer);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ crossings\ \ \ =\ 0;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ wasPositive\ =\ (previousSample\_\ >=\ 0.0f);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ sample\ :\ signal)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ isPositive\ =\ (sample\ >=\ 0.0f);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ crossings\ +=\ int(isPositive\ !=\ wasPositive);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ wasPositive\ =\ isPositive;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ previousSample\_\ =\ signal.back();}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\&\ result\ =\ getFeatureSet();}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ result[0][0]\ =\ crossings;\ \ \textcolor{comment}{//\ first\ and\ only\ output,\ first\ and\ only\ bin}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ result;\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ return\ span/view\ of\ the\ results}}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ previousSample\_\ =\ 0.0f;}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{RTVAMP\_ENTRY\_POINT(ZeroCrossing)}
+
+\end{DoxyCode}
+
+
+\doxysubsection*{Host}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{comment}{//\ list\ all\ plugins\ keys\ (library:plugin)}}
+\DoxyCodeLine{\textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\&\ key\ :\ rtvamp::hostsdk::listPlugins())\ \{}
+\DoxyCodeLine{\ \ \ \ std::cout\ <<\ key.get()\ <<\ std::endl;}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{auto}\ plugin\ =\ rtvamp::hostsdk::loadPlugin(\textcolor{stringliteral}{"{}minimal-\/plugin:zerocrossing"{}},\ 48000\ \textcolor{comment}{/*\ samplerate\ */});}
+\DoxyCodeLine{plugin-\/>initialise(4096\ \textcolor{comment}{/*\ step\ size\ */},\ 4096\ \textcolor{comment}{/*\ block\ size\ */});}
+\DoxyCodeLine{}
+\DoxyCodeLine{std::vector<float>\ buffer(4096);}
+\DoxyCodeLine{\textcolor{comment}{//\ fill\ buffer\ with\ data\ from\ audio\ file,\ sound\ card,\ ...}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{auto}\ features\ =\ plugin-\/>process(buffer,\ 0\ \textcolor{comment}{/*\ timestamp\ nanoseconds\ */});}
+\DoxyCodeLine{std::cout\ <<\ \textcolor{stringliteral}{"{}Zero\ crossings:\ "{}}\ <<\ features[0][0]\ <<\ std::endl;}
+
+\end{DoxyCode}
+ 

@@ -1,0 +1,36 @@
+\hypertarget{Bank_8hpp_source}{}\doxysection{Bank.\+hpp}
+\label{Bank_8hpp_source}\index{Bank.hpp@{Bank.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ BANK\_HPP}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ BANK\_HPP}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}BankAccount.hpp"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <algorithm>}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classBank}{Bank}}}
+\DoxyCodeLine{00009\ \{}
+\DoxyCodeLine{00010\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00011\ \ \ \ \ std::vector<BankAccount>\ accounts;}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{comment}{//\ Default\ constructor}}
+\DoxyCodeLine{00015\ \ \ \ \ \mbox{\hyperlink{classBank}{Bank}}();}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{comment}{//\ Move\ constructor}}
+\DoxyCodeLine{00018\ \ \ \ \ \mbox{\hyperlink{classBank}{Bank}}(\mbox{\hyperlink{classBank}{Bank}}\&\&\ obj);}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordtype}{void}\ \ \ addAccount(\textcolor{keyword}{const}\ \mbox{\hyperlink{classBankAccount}{BankAccount}}\&\ account);}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{double}\ getTotalBalance()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordtype}{void}\ \ \ displayAllAccounts()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{void}\ SortAccounts();}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{comment}{//\ getter\ for\ accounts}}
+\DoxyCodeLine{00027\ \ \ \ \ std::vector<BankAccount>\ getAccounts()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00028\ \};}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ BANK\_HPP}}
+
+\end{DoxyCode}

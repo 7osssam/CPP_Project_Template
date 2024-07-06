@@ -1,0 +1,43 @@
+@startuml
+title This Diagram shows the relationship between all system components
+package [src] as C_0009392701334512935369 {
+package [BankAccount] as C_0001617240256891923844 {
+class "BankAccount" as C_0009984192897324832466
+class C_0009984192897324832466 [[classBankAccount.html{BankAccount}]] {
++BankAccount(int accountNumber, const std::string & accountHolder, const std::string & accountType, double accountBalance) : void [[[{BankAccount}]]]
+..
++deposit(double amount) : void [[[{deposit}]]]
++displayAccountInfo() const : void [[[{displayAccountInfo}]]]
++getAccountBalance() const : double [[[{getAccountBalance}]]]
++getAccountHolder() const : const std::string & [[[{getAccountHolder}]]]
++getAccountNumber() const : int [[[{getAccountNumber}]]]
++getAccountType() const : const std::string & [[[{getAccountType}]]]
++withdraw(double amount) : bool [[[{withdraw}]]]
+__
+-accountBalance : double [[[{accountBalance}]]]
+-accountHolder : std::string [[[{accountHolder}]]]
+-accountNumber : int [[[{accountNumber}]]]
+-accountType : std::string [[[{accountType}]]]
+}
+}
+package [Bank] as C_0002394840416120061501 {
+class "Bank" as C_0013925658533498293399
+class C_0013925658533498293399 [[classBank.html{Bank}]] {
++Bank() : void [[[{Bank}]]]
++Bank(Bank && obj) : void [[[{Bank}]]]
+..
++SortAccounts() : void [[[{SortAccounts}]]]
++addAccount(const BankAccount & account) : void [[[{addAccount}]]]
++displayAllAccounts() const : void [[[{displayAllAccounts}]]]
++getAccounts() const : std::vector<BankAccount> [[[{getAccounts}]]]
++getTotalBalance() const : double [[[{getTotalBalance}]]]
+__
+-accounts : std::vector<BankAccount> [[[{accounts}]]]
+}
+}
+}
+C_0013925658533498293399 o-- C_0009984192897324832466 : -accounts
+
+'Generated with clang-uml, version 0.5.3
+'LLVM version clang version 18.1.1 (https://github.com/llvm/llvm-project.git dba2a75e9c7ef81fe84774ba5eee5e67e01d801a)
+@enduml

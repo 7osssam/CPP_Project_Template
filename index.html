@@ -153,8 +153,8 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 <div class="line">├───src</div>
 <div class="line">│   └───Module</div>
 <div class="line">│       └───CMakeLists.txt       // CMakeLists for user module</div>
-<div class="line">├───testing</div>
-<div class="line">│   ├───TS                       // Test Suite</div>
+<div class="line">├───tests</div>
+<div class="line">│   ├───Test_suite               // Test Suite</div>
 <div class="line">│   │   └───CMakeLists.txt       // CMakeLists for test suite</div>
 <div class="line">│   ├───lib</div>
 <div class="line">│   │   └───googletest</div>
@@ -184,7 +184,7 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 </div><!-- fragment --><p class="startli">Generates HTML and PDF documentation using Doxygen from the configured Doxyfile.in.</p>
 </li>
 <li><p class="startli"><b>Run Unit Tests:</b> </p><div class="fragment"><div class="line">make test</div>
-</div><!-- fragment --><p class="startli">Executes unit tests using Google Test framework.</p>
+</div><!-- fragment --><p class="startli">Executes unit tests using Google Test framework (You can add your own testing framework, as long as it is supported by CMake).</p>
 </li>
 <li><b>Generate Diagrams (Optional):</b></li>
 </ol>

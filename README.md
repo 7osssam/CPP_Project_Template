@@ -116,6 +116,17 @@ This project template provides a robust foundation for C++ projects using CMake 
 
    Generates diagrams (PlantUML and Mermaid) from diagrams stored in `docs/diagrams`.
 
+## TODO
+- [ ] Add support for Windows CI/CD.
+- [ ] Add support for macOS CI/CD.
+- [ ] Add support for Code Coverage.
+- [ ] Add support for Static Code Analysis (linting).
+
+<!-- callout -->
+> [!NOTE]  
+> The Banking System project files in this template are for demonstration purposes only. You can replace them with your own project files and modules.
+
+
 ## Contributing
 
 Contributions are welcome! Please follow these steps to contribute:
@@ -126,11 +137,6 @@ Contributions are welcome! Please follow these steps to contribute:
 4. Push to the branch (`git push origin feature/feature-name`).
 5. Create a new Pull Request.
 
-## TODO
-- [ ] Add support for Windows CI/CD.
-- [ ] Add support for macOS CI/CD.
-- [ ] Add support for Code Coverage.
-- [ ] Add support for Static Code Analysis (linting).
 
 ## License
 Feel free to use this project template for your own projects.

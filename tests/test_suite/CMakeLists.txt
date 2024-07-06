@@ -85,7 +85,7 @@ if(ENABLE_COVERAGE)
 	#	"${CMAKE_SOURCE_DIR}/cmake"
 	#	"${CMAKE_SOURCE_DIR}/docs"
 	#	"${CMAKE_SOURCE_DIR}/lib"
-	#	"${CMAKE_SOURCE_DIR}/testing"
+	#	"${CMAKE_SOURCE_DIR}/tests"
 	#	"${CMAKE_SOURCE_DIR}/build"
 	#)
 
@@ -115,7 +115,7 @@ set(COVERAGE_EXCLUDES
 	"${CMAKE_SOURCE_DIR}/cmake/*"
 	"${CMAKE_SOURCE_DIR}/docs/*"
 	"${CMAKE_SOURCE_DIR}/lib/*"
-	"${CMAKE_SOURCE_DIR}/testing/*"
+	"${CMAKE_SOURCE_DIR}/tests/*"
 	"${CMAKE_SOURCE_DIR}/build/*"
 )
 

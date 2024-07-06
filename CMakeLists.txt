@@ -113,7 +113,7 @@ add_subdirectory(app) # Application (main)
 
 if (ENABLE_TESTS)
 	enable_testing()
-	add_subdirectory(testing)
+	add_subdirectory(tests)
 	#if (ENABLE_COVERAGE)
 		#include(CodeCoverage)
     	#append_coverage_compiler_flags()

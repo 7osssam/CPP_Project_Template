@@ -25,10 +25,10 @@ diagrams:
       paths:
         - lib/
         - build/
-        - testing/
+        - tests/
       namespaces:
         - std
-        - testing  # Exclude Google Test namespace
+        - tests  # Exclude Google Test namespace
         - nlohmann  # Exclude nlohmann namespace
     generate_packages: true
     package_type: directory
@@ -46,11 +46,11 @@ diagrams:
         - src
         - inc
         - lib/
-        - testing
+        - tests
     exclude:
       namespaces:
         - std
-        - testing  # Exclude Google Test namespace
+        - tests  # Exclude Google Test namespace
         - nlohmann  # Exclude nlohmann namespace
       paths:
         - lib/
@@ -65,11 +65,11 @@ diagrams:
         - src/
         - inc/
         - lib/
-        - testing/
+        - tests/
     exclude:
       namespaces:
         - std
-        - testing  # Exclude Google Test namespace
+        - tests  # Exclude Google Test namespace
         - nlohmann  # Exclude nlohmann namespace
       paths:
         - lib/

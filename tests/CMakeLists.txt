@@ -21,7 +21,7 @@
 ##============================================================================
 
 # this will include a git submodule in a directory (relative to the root CMakeLists.txt file)
-add_git_submodule(testing/lib/googletest https://github.com/google/googletest)
+add_git_submodule(tests/lib/googletest https://github.com/google/googletest)
 
 # =============================================================================
 # Testing Modules (unit tests)

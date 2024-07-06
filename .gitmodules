@@ -1,8 +1,8 @@
 [submodule "lib/json"]
 	path = lib/json
 	url = https://github.com/nlohmann/json
-[submodule "testing/lib/googletest"]
-	path = testing/lib/googletest
+[submodule "tests/lib/googletest"]
+	path = tests/lib/googletest
 	url = https://github.com/google/googletest
 [submodule "docs/doxygen/doxygen-awesome"]
 	path = docs/doxygen/doxygen-awesome

@@ -44,8 +44,8 @@ This project template provides a robust foundation for C++ projects using CMake 
 ├───src
 │   └───Module
 │       └───CMakeLists.txt       // CMakeLists for user module
-├───testing
-│   ├───TS                       // Test Suite
+├───tests
+│   ├───Test_suite               // Test Suite
 │   │   └───CMakeLists.txt       // CMakeLists for test suite
 │   ├───lib
 │   │   └───googletest
@@ -104,7 +104,7 @@ This project template provides a robust foundation for C++ projects using CMake 
    make test
    ```
 
-   Executes unit tests using Google Test framework.
+   Executes unit tests using Google Test framework (You can add your own testing framework, as long as it is supported by CMake).
 
 8. **Generate Diagrams (Optional):**
 <!-- https://clang-uml.github.io -->

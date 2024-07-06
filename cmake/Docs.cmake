@@ -58,32 +58,30 @@ if (DOXYGEN_FOUND)
         VERBATIM
     )
 
-    if (PDFLATEX)
-        add_custom_target(pdf
-            COMMAND ${DOXYGEN_EXECUTABLE} ${doxyfile} > ${CMAKE_BINARY_DIR}/doxygen_pdf_output.log 2>&1
-            COMMAND pdflatex -interaction=nonstopmode -output-directory ${DOCS_LATEX_PATH} ${DOCS_LATEX_PATH}/refman.tex > ${CMAKE_BINARY_DIR}/pdflatex_output.log 2>&1
-            WORKING_DIRECTORY ${DOCS_LATEX_PATH}
-			BYPRODUCTS ${DOCS_LATEX_PATH}/refman.pdf
-            COMMENT "Generating PDF documentation with Doxygen and LaTeX"
-            VERBATIM
-        )
-	
-    else()
-        message(WARNING "pdflatex not found. PDF generation disabled.")
-    endif()
+	if(ENABLE_PDF_DOCS)
+		if (PDFLATEX)
+			add_custom_target(pdf
+				COMMAND ${DOXYGEN_EXECUTABLE} ${doxyfile} > ${CMAKE_BINARY_DIR}/doxygen_pdf_output.log 2>&1
+				COMMAND pdflatex -interaction=nonstopmode -output-directory ${DOCS_LATEX_PATH} ${DOCS_LATEX_PATH}/refman.tex > ${CMAKE_BINARY_DIR}/pdflatex_output.log 2>&1
+				WORKING_DIRECTORY ${DOCS_LATEX_PATH}
+				BYPRODUCTS ${DOCS_LATEX_PATH}/refman.pdf
+				COMMENT "Generating PDF documentation with Doxygen and LaTeX"
+				VERBATIM
+			)
+		
+		else()
+			message(WARNING "pdflatex not found. PDF generation disabled.")
+		endif()
 
-    # Add a target to generate both documentation and PDF
-    add_custom_target(all_docs
-        DEPENDS html pdf
-        COMMENT "Generating both HTML and PDF documentation"
-    )
+		add_custom_command(TARGET pdf POST_BUILD
+			COMMAND echo "PDF documentation generated in ${DOCS_LATEX_PATH}/refman.pdf"
+		)
+	endif()
 
     # Add a target to generate the html documentation
     add_custom_command(TARGET html POST_BUILD
         COMMAND echo "Documentation generated in ${DOXYGEN_OUTPUT_DIR}/html/index.html"
     )
-	add_custom_command(TARGET pdf POST_BUILD
-		COMMAND echo "PDF documentation generated in ${DOCS_LATEX_PATH}/refman.pdf"
-	)
+
 
 endif()

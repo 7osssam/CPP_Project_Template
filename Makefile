@@ -66,7 +66,7 @@ doc: html pdf
 # Run tests
 test:
 	@echo "Running tests..."
-	@cd $(BUILD_DIR) && ctest --output-on-failure
+	@cd $(BUILD_DIR) && cmake .. -DENABLE_TESTS=ON && cmake --build . && ctest --output-on-failure
 
 
 diagrams: build
